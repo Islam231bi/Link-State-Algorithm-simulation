@@ -19,17 +19,19 @@ for line in lines[1:]:
 
 # Compute the forwarding table
 
-print("Destination        Link")
-for node in G.nodes:
-    l = []
-    if node != 'u':
-        l = nx.dijkstra_path(G,'u',node,weight='weight')
-        print("  " + node + "                "+ "(u, " + str(l[1]) + ")")
-
+for n in G.nodes:
+    print("Forwarding table for node "+ n)
+    print("Destination        Link")
+    for node in G.nodes:
+        l = []
+        if node != n:
+            l = nx.dijkstra_path(G,n,node,weight='weight')
+            print("  " + node + "                "+ "("+str(n)+", " + str(l[1]) + ")")
+    print("\n")
 
 # visualize the Newtork topology
 pos = nx.spring_layout(G)
 nx.draw(G, pos, with_labels=True, node_color='lightblue', node_size=500, font_size=10)
 labels = nx.get_edge_attributes(G, 'weight')
 nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-# plt.show()
+plt.show()
